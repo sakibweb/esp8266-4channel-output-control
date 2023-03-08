@@ -5,7 +5,10 @@
 const char* ssid = "SmartHome";
 const char* password = "password";
 
-IPAddress apIP(192, 168, 4, 1);
+IPAddress local_ip(192, 168, 4, 1);
+IPAddress gateway(192, 168, 4, 1);
+IPAddress subnet(255, 255, 255, 0);
+
 ESP8266WebServer server(80);
 
 int led1Pin = 5;
@@ -93,6 +96,8 @@ void setup() {
   digitalWrite(led3Pin, led3State);
   digitalWrite(led4Pin, led4State);
   digitalWrite(led5Pin, led5State);
+  WiFi.mode(WIFI_AP); 
+  WiFi.softAPConfig(local_ip, gateway, subnet);
   WiFi.softAP(ssid, password);
   IPAddress myIP = WiFi.softAPIP();
   Serial.print("\n----------SMART  HOME----------\n");
